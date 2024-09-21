@@ -1,9 +1,15 @@
 const express = require('express');
 var app = express();
-const mysql = require('mysql');
 const port = 3000;
-const sql = require('sql')
+const sql = require('./database.js')
+const bodyParser = require('body-parser')
 
+app.set('view-engine', 'ejs')
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
 
 app.get('/', (req,res)=>{
     res.send({
@@ -16,11 +22,16 @@ app.get('/login', (req,res)=>{
 
 });
 app.post('/login/home', (req,res)=>{
-    var email = req.body.teste;
+    var email = req.body.email;
+    var senha = req.body.password;
+    try{
+        sql.query('INSERT INTO users(email,password) VALUES(' + '"' + email + '"' + ',' + '"' + senha +'"' + ' );')
+        res.send("Seu email é:" + email + "E sua senha é: " + senha);
+    }catch(error){
+        res.send("O erro:" + error)
+    }
+    
 
-    sql.create({
-        email: email
-    })
 
 });
 app.get('/users', function(req,res){

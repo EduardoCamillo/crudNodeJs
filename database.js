@@ -16,13 +16,4 @@ try{
 }catch(e){
     console.log("Erro: " + e)
 }
-var email = "teste1"
-var senha = "senha"
-
-
-try{
-    console.log("Realizando inserção:")
-    sql.query('INSERT INTO users(email, password) VALUES( ' + '"' + email  + '"' + ', ' + '"' + senha  + '"' + ');')
-}catch(error){
-    console.log("DEU ERRO: " + error)
-}
+module.exports = sql;
