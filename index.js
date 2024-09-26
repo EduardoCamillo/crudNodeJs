@@ -35,11 +35,12 @@ app.post('/login/home', (req,res)=>{
 
 });
 app.get('/users', function(req,res){
-    res.send({
+    var user = {
         nome: "eduardo",
         sobrenome: "Camillo",
-        idade: 22
-    });
+        age: 22
+    }
+    res.send(user);
 })
 app.delete('/users', function(req,res){
     res.send('Deletando...')
