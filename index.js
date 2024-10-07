@@ -30,10 +30,17 @@ app.post('/login/home', (req,res)=>{
     }catch(error){
         res.send("O erro:" + error)
     }
-    
-
-
 });
+    app.get('/consulta', function(req,res){
+        try{
+            sql.query('SELECT * FROM users', function(err,result){
+                if(err) throw err;
+                    res.json(result)
+        });
+        }catch(e){
+            console.log("Error aqui:" + e)
+        }
+})
 app.get('/users', function(req,res){
     var user = {
         nome: "eduardo",
