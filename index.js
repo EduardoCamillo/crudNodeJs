@@ -4,6 +4,8 @@ const port = 3000;
 const sql = require('./database.js')
 const bodyParser = require('body-parser')
 
+
+
 app.set('view-engine', 'ejs')
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -22,6 +24,7 @@ app.get('/login', (req,res)=>{
 
 });
 app.post('/login/home', (req,res)=>{
+    res.setHeader('Access-Control-Allow-Origin','http://localhost:5173');
     var email = req.body.email;
     var senha = req.body.password;
     try{
@@ -34,7 +37,7 @@ app.post('/login/home', (req,res)=>{
     app.get('/consulta', function(req,res){
         try{
             sql.query('SELECT * FROM users', function(err,result){
-                if(err) throw err;
+                if(err) throw "Olha onde está o erro" + err;
                     res.json(result)
         });
         }catch(e){
@@ -42,12 +45,20 @@ app.post('/login/home', (req,res)=>{
         }
 })
 app.get('/users', function(req,res){
+    res.setHeader('Access-Control-Allow-Origin','http://localhost:5173');
     var user = {
         nome: "eduardo",
         sobrenome: "Camillo",
-        age: 22
+        age: 22     
     }
-    res.send(user);
+    res.json({
+        nome: "eduardo",
+        sobrenome: "camillo",
+        age: 22
+    });
+    res.statusCode = 200
+    res.statusMessage = "Deu certo"
+    
 })
 app.delete('/users', function(req,res){
     res.send('Deletando...')
